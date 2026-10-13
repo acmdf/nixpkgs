@@ -38,8 +38,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     # patch the jogamp repository to allow HTTP fallback redirects
     substituteInPlace build.gradle \
-      --replace-fail 'url "https://jogamp.org/deployment/maven/"' \
-      'url "https://www.jogamp.org/deployment/maven/"; allowInsecureProtocol = true'
+      --replace-fail 'url = "https://jogamp.org/deployment/maven/"' \
+      'url = "https://jogamp.org/deployment/maven/"; allowInsecureProtocol = true'
   '';
 
   nativeBuildInputs = [
