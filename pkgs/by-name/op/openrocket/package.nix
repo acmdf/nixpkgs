@@ -42,6 +42,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       'url = "https://jogamp.org/deployment/maven/"; allowInsecureProtocol = true'
   '';
 
+  env.JAVA_TOOL_OPTIONS = "-Dfile.encoding=UTF8";
   nativeBuildInputs = [
     jdk
     makeWrapper
@@ -52,6 +53,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     pkg = finalAttrs.finalPackage;
     data = ./deps.json;
   };
+
+  # Needed to run gradle on darwin
+  __darwinAllowLocalNetworking = true;
 
   doCheck = true;
 
@@ -76,15 +80,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     license = lib.licenses.gpl3Plus;
     mainProgram = "openrocket";
     maintainers = with lib.maintainers; [ tomasajt ];
-    platforms = [
-      "i686-linux"
-      "x86_64-linux"
-      "aarch64-linux"
-      "armv7l-linux"
-      "armv6l-linux"
-      "powerpc64le-linux"
-      "riscv64-linux"
-    ];
+    platforms = jdk.meta.platforms;
     sourceProvenance = with lib.sourceTypes; [
       fromSource
       binaryBytecode
